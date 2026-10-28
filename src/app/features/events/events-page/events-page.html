@@ -1,0 +1,148 @@
+<div class="d-flex flex-col gap-4">
+  <div class="d-flex flex-wrap items-end justify-between gap-3">
+    <div>
+      <h1 class="text-xl">{{ 'events.title' | t }}</h1>
+      <p class="m-0 mt-1 text-muted">{{ 'events.subtitle' | t }}</p>
+    </div>
+    <div class="d-flex gap-2">
+      <dx-button
+        icon="exportxlsx"
+        [text]="'events.export' | t"
+        [disabled]="exporting() || !lookupsReady()"
+        (onClick)="exportExcel()"
+      />
+      <dx-button
+        icon="add"
+        type="default"
+        [text]="'events.create' | t"
+        [disabled]="!lookupsReady()"
+        (onClick)="createVisible.set(true)"
+      />
+    </div>
+  </div>
+
+  @if (lookupsFailed()) {
+    <app-error-alert [message]="text.lookupsFailed" (retry)="retryLookups()" />
+  } @else if (lookupsReady()) {
+    <app-event-summary [filter]="activeFilter()" [statuses]="statuses.value() ?? []" />
+
+    @if (loadError()) {
+      <app-error-alert [message]="text.loadFailed" (retry)="retryLoad()" />
+    }
+
+    <section class="card p-0" [attr.aria-label]="'events.title' | t">
+      <dx-data-grid
+        [dataSource]="store"
+        dateSerializationFormat="yyyy-MM-dd"
+        [showBorders]="false"
+        [columnAutoWidth]="true"
+        [errorRowEnabled]="false"
+        [noDataText]="text.noData"
+        [syncLookupFilterValues]="false"
+        [stateStoring]="stateStoring"
+        (onSaved)="onSaved()"
+        (onDataErrorOccurred)="onDataError($event)"
+      >
+        <dxo-data-grid-remote-operations [paging]="true" [sorting]="true" [filtering]="true" />
+        <dxo-data-grid-paging [pageSize]="50" />
+        <dxo-data-grid-pager
+          [visible]="true"
+          [showPageSizeSelector]="true"
+          [allowedPageSizes]="pageSizes"
+          [showInfo]="true"
+          [infoText]="text.pagerInfo"
+          [showNavigationButtons]="true"
+        />
+        <dxo-data-grid-search-panel [visible]="true" [width]="280" [placeholder]="text.search" />
+        <dxo-data-grid-filter-row [visible]="true" />
+        <dxo-data-grid-header-filter [visible]="true" />
+        <dxo-data-grid-filter-panel [visible]="true" />
+        <dxo-data-grid-editing mode="cell" [allowUpdating]="true" refreshMode="repaint" />
+        <dxo-data-grid-master-detail [enabled]="true" template="participants" />
+
+        <!-- filterOperations mirror the operators the ListQuery contract supports (see load-options.ts). -->
+        <dxi-data-grid-column
+          dataField="name"
+          [caption]="'events.col.name' | t"
+          [allowEditing]="false"
+          [allowHeaderFiltering]="false"
+          [filterOperations]="['contains']"
+        />
+        <dxi-data-grid-column
+          dataField="date"
+          dataType="date"
+          [format]="dateFormat"
+          [caption]="'events.col.date' | t"
+          sortOrder="asc"
+          selectedFilterOperation="between"
+          [filterOperations]="['between', '=', '<', '>']"
+          [allowEditing]="false"
+          [allowHeaderFiltering]="false"
+          [width]="200"
+        />
+        <!-- Lookups: header filter (multi-select) + search; the filter-row cell would duplicate it. -->
+        <dxi-data-grid-column
+          dataField="locationId"
+          [caption]="'events.col.location' | t"
+          [allowFiltering]="false"
+          [allowHeaderFiltering]="true"
+          [allowSearch]="true"
+          [width]="190"
+        >
+          <dxo-data-grid-lookup
+            [dataSource]="locations.value()"
+            valueExpr="id"
+            displayExpr="name"
+          />
+        </dxi-data-grid-column>
+        <dxi-data-grid-column
+          dataField="statusId"
+          [caption]="'events.col.status' | t"
+          [allowFiltering]="false"
+          [allowHeaderFiltering]="true"
+          [allowSearch]="true"
+          cellTemplate="statusCell"
+          [width]="170"
+        >
+          <dxo-data-grid-lookup
+            [dataSource]="statuses.value()"
+            valueExpr="id"
+            displayExpr="label"
+          />
+        </dxi-data-grid-column>
+        <dxi-data-grid-column
+          dataField="participantCount"
+          dataType="number"
+          [caption]="'events.col.participants' | t"
+          [allowEditing]="false"
+          [allowFiltering]="false"
+          [allowHeaderFiltering]="false"
+          [allowSearch]="true"
+          [width]="130"
+        />
+
+        <div *dxTemplate="let cell of 'statusCell'">
+          <app-status-badge [status]="status(cell.value)" [fallback]="cell.value" />
+        </div>
+        <div *dxTemplate="let detail of 'participants'">
+          <app-event-participants
+            [eventId]="detail.data.id"
+            [eventName]="detail.data.name"
+            (countChanged)="onParticipantCount($event)"
+          />
+        </div>
+      </dx-data-grid>
+    </section>
+  } @else {
+    <p class="text-muted" role="status">{{ 'common.loading' | t }}</p>
+  }
+</div>
+
+@if (lookupsReady()) {
+  <app-event-create-popup
+    [(visible)]="createVisible"
+    [statuses]="statuses.value() ?? []"
+    [locations]="locations.value() ?? []"
+    (created)="onCreated()"
+  />
+}
