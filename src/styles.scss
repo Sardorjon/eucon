@@ -1,0 +1,20 @@
+@use 'tokens';
+@use 'utilities';
+
+body {
+  margin: 0;
+  background: var(--app-page-bg);
+  color: var(--app-color-text);
+  font-family:
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 600;
+}

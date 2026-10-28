@@ -1,0 +1,86 @@
+{
+  "app": {
+    "title": "Veranstaltungsverwaltung",
+    "nav": "Hauptnavigation",
+    "language": "Sprache"
+  },
+  "common": {
+    "retry": "Erneut versuchen",
+    "cancel": "Abbrechen",
+    "loading": "Wird geladen…",
+    "saved": "Änderung gespeichert."
+  },
+  "errors": {
+    "unavailable": "Der Server ist momentan nicht erreichbar. Bitte erneut versuchen.",
+    "unexpected": "Ein unerwarteter Fehler ist aufgetreten.",
+    "loadFailed": "Die Daten konnten nicht geladen werden.",
+    "notFound": "Der Datensatz wurde nicht gefunden.",
+    "validation": "Die Eingaben sind ungültig.",
+    "dateNotFuture": "Das Datum muss in der Zukunft liegen.",
+    "invalidEmail": "Bitte eine gültige E-Mail-Adresse eingeben.",
+    "unsupportedQuery": "Dieser Filter wird nicht unterstützt und wurde zurückgesetzt."
+  },
+  "events": {
+    "nav": "Veranstaltungen",
+    "title": "Veranstaltungen",
+    "subtitle": "Messen, Kongresse, Kunden- und interne Events",
+    "create": "Neue Veranstaltung",
+    "export": "Excel-Export",
+    "search": "Suchen…",
+    "noData": "Keine Veranstaltungen für die aktuellen Filter gefunden.",
+    "pagerInfo": "Seite {0} von {1} ({2} Einträge)",
+    "loadFailed": "Die Veranstaltungen konnten nicht geladen werden.",
+    "lookupsFailed": "Status und Orte konnten nicht geladen werden.",
+    "col": {
+      "name": "Name",
+      "date": "Datum",
+      "location": "Ort",
+      "status": "Status",
+      "participants": "Teilnehmer"
+    }
+  },
+  "summary": {
+    "title": "Auswertung",
+    "basis": "Basis: alle Veranstaltungen des aktiven Filters",
+    "groupBy": "Gruppieren nach",
+    "byStatus": "Nach Status",
+    "byLocation": "Nach Ort",
+    "events": "Veranstaltungen",
+    "participants": "Teilnehmer gesamt",
+    "row": "{0} Events · {1} Teilnehmer",
+    "failed": "Die Auswertung konnte nicht geladen werden."
+  },
+  "create": {
+    "title": "Neue Veranstaltung",
+    "submit": "Anlegen",
+    "pending": "Wird angelegt…",
+    "success": "Veranstaltung „{0}“ angelegt.",
+    "nameLength": "Der Name muss 3–120 Zeichen lang sein.",
+    "dateFuture": "Das Datum muss in der Zukunft liegen (frühestens {0}).",
+    "required": "{0} ist ein Pflichtfeld."
+  },
+  "participants": {
+    "title": "Teilnehmer · {0}",
+    "add": "Teilnehmer hinzufügen",
+    "confirmDelete": "Teilnehmer wirklich entfernen?",
+    "delete": "Teilnehmer entfernen",
+    "col": {
+      "name": "Name",
+      "email": "E-Mail",
+      "role": "Rolle"
+    },
+    "role": {
+      "guest": "Gast",
+      "speaker": "Referent/in",
+      "organizer": "Organisation",
+      "press": "Presse"
+    }
+  },
+  "export": {
+    "fileName": "Veranstaltungen",
+    "title": "Veranstaltungen",
+    "date": "Exportdatum: {0}",
+    "success": "Export erstellt.",
+    "failed": "Der Export ist fehlgeschlagen. Bitte erneut versuchen."
+  }
+}

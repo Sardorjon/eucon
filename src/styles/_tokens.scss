@@ -1,0 +1,30 @@
+// Single source of truth for colours and spacing. App tokens alias DevExtreme's theme
+// variables so custom markup always matches the widgets. Raw colour values live only here.
+:root {
+  --app-color-primary: var(--dx-color-primary);
+  --app-color-text: var(--dx-color-text);
+  --app-color-text-muted: color-mix(in srgb, var(--dx-color-text) 72%, transparent);
+  --app-color-border: var(--dx-color-border);
+  --app-color-danger: var(--dx-color-danger);
+  --app-color-success: var(--dx-color-success);
+  --app-color-surface: var(--dx-component-color-bg);
+  --app-color-danger-bg: color-mix(in srgb, var(--dx-color-danger) 8%, var(--dx-component-color-bg));
+  --app-color-track: color-mix(in srgb, var(--dx-color-border) 50%, transparent);
+  --app-page-bg: #f5f5f5;
+  --app-status-fallback: #616161;
+
+  --app-radius: var(--dx-border-radius, 4px);
+  --app-font-size-sm: 13px;
+  --app-font-size-lg: 18px;
+  --app-font-size-xl: 24px;
+
+  --app-space-0: 0;
+  --app-space-1: 4px;
+  --app-space-2: 8px;
+  --app-space-3: 12px;
+  --app-space-4: 16px;
+  --app-space-5: 24px;
+  --app-space-6: 32px;
+}
+
+$spaces: (0, 1, 2, 3, 4, 5, 6);
